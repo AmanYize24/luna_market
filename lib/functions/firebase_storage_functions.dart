@@ -549,6 +549,7 @@ Future<List> showNewProducts({required context}) async {
 }
 
 Future<List> showViewProducts({required context}) async {
+  newProductsImg = [];
   var houseList = await newProductsRef.listAll().then((value) => value.items);
   var houseListPath = [];
   for (int i = 0; i < houseList.length; i++) {
@@ -631,5 +632,5 @@ Future<List> showViewProducts({required context}) async {
     ));
   }
 
-  return houseImg;
+  return newProductsImg;
 }

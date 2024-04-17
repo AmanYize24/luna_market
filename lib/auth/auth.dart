@@ -24,7 +24,35 @@ Future<void> createUser(
     required String confirmPassword,
     required String displayName,
     required context}) async {
-  if (password == confirmPassword) {
+  if (displayName == '') {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('username error'),
+              content: const Text('please enter username.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Ok'))
+              ],
+            ));
+  } else if (email == '') {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('email error'),
+              content: const Text('please enter email.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Ok'))
+              ],
+            ));
+  } else if (password == confirmPassword) {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -39,31 +67,79 @@ Future<void> createUser(
             .push(MaterialPageRoute(builder: (context) => const Verify()));
       }
     } on FirebaseAuthException catch (e) {
+      print('the firebase error is ${e.code}');
+      if (e.code == 'invalid-email') {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text('invalid email'),
+                  content: const Text('email is invalid'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Ok'))
+                  ],
+                ));
+      }
       if (e.code == 'weak-password') {
         showDialog(
             context: context,
-            builder: (context) => const AlertDialog(
-                  content: Text('The password provided is too weak.'),
+            builder: (context) => AlertDialog(
+                  title: const Text('weak password'),
+                  content: const Text('The password provided is too weak.'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Ok'))
+                  ],
                 ));
       } else if (e.code == 'email-already-in-use') {
         showDialog(
             context: context,
-            builder: (context) => const AlertDialog(
-                  content: Text('The account already exists for that email.'),
+            builder: (context) => AlertDialog(
+                  title: const Text('account error'),
+                  content: const Text('Account already exists.'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Ok'))
+                  ],
                 ));
       }
     } catch (e) {
       showDialog(
           context: context,
-          builder: (context) => const AlertDialog(
-                content: Text('unknown error'),
+          builder: (context) => AlertDialog(
+                title: const Text('unknowm'),
+                content: const Text('unknown error.'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Ok'))
+                ],
               ));
     }
   } else {
     showDialog(
         context: context,
-        builder: (context) => const AlertDialog(
-              content: Text("password's don't match"),
+        builder: (context) => AlertDialog(
+              title: const Text('password error'),
+              content: const Text("The password provided doesn't match."),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Ok'))
+              ],
             ));
   }
 }
@@ -139,14 +215,30 @@ Future<void> signIn(
     if (e.code == 'user-not-found') {
       showDialog(
           context: context,
-          builder: (context) => const AlertDialog(
-                content: Text("no user found with this email"),
+          builder: (context) => AlertDialog(
+                title: const Text('Account error'),
+                content: const Text('no user found with this email'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Ok'))
+                ],
               ));
     } else if (e.code == 'wrong-password') {
       showDialog(
           context: context,
-          builder: (context) => const AlertDialog(
-                content: Text("wrong password"),
+          builder: (context) => AlertDialog(
+                title: const Text('Password error'),
+                content: const Text('The password provided is not correct'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Ok'))
+                ],
               ));
     }
   }
