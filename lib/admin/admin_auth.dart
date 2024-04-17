@@ -36,8 +36,20 @@ Future<void> getAdmin(
         }
       }
     });
-  } on FirebaseException catch (e) {
   } catch (e) {
-    print(e);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("error from get admin"),
+        content: Text('$e'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'))
+        ],
+      ),
+    );
   }
 }

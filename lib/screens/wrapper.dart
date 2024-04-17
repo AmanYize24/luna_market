@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:luna_market/admin/screens/admin_login.dart';
-
 import 'package:luna_market/screens/verify.dart';
-
 import '../screens/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../auth/auth.dart';
@@ -41,11 +38,10 @@ class _WrapperState extends State<Wrapper> {
                 onDoubleTap: () {
                   setState(() {
                     counter += 1;
-                    print(counter);
                   });
                   if (counter == 5) {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AdminLogin()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AdminLogin()));
                     setState(() {
                       counter = 0;
                     });
