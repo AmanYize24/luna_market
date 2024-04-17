@@ -48,6 +48,7 @@ dependencies:
   file_picker: ^8.0.0+1
   file: ^7.0.0
   path: ^1.9.0
+  gradient_borders: ^1.0.0
 
 dev_dependencies:
   flutter_test:

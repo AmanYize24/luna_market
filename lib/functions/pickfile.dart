@@ -16,8 +16,6 @@ Future<PlatformFile> imgPath({required context}) async {
           size: result.files.first.size);
 
       return file;
-    } else {
-      PlatformFile(name: '', bytes: null, size: 0);
     }
   } catch (e) {
     showDialog(
@@ -39,8 +37,9 @@ Future<PlatformFile> imgPath({required context}) async {
 
 Future<String> pickFile({required file, required context}) async {
   final checkoutRef = FirebaseStorage.instance.ref().child('Checkout');
+  print('The path is ${file.path}');
   try {
-    final uploadRef = File(file.path);
+    final uploadRef = File(file.bytes);
 
     try {
       await checkoutRef

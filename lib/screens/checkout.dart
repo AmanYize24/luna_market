@@ -19,6 +19,10 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
+  BuildContext getContext() {
+    return context;
+  }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -38,23 +42,30 @@ class _CheckoutState extends State<Checkout> {
         String val = newCart[i]['price'].split('E')[0];
         List newVal = val.split(',');
         String tVal = '';
-        newVal.forEach((val) => tVal = tVal + val);
+
+        for (int i = 0; i < newVal.length; i++) {
+          tVal = tVal + newVal[i];
+        }
         total = total + double.parse(tVal);
       }
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text('error'),
-                content: Text(e.toString()),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('cancel'))
-                ],
-              ));
+      void showThis1() {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text('error'),
+                  content: Text(e.toString()),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('cancel'))
+                  ],
+                ));
+      }
+
+      showThis1();
     }
 
     return total;
@@ -404,14 +415,14 @@ class _CheckoutState extends State<Checkout> {
                     });
                     await addToCheckout(
                         name: name,
-                        proofImg:
-                            await pickFile(file: proofImgUrl, context: context),
+                        proofImg: await pickFile(
+                            file: proofImgUrl, context: getContext()),
                         email: email,
                         phone: phoneNumber,
                         paymentMethod: paymentMethod,
-                        cartData: await value.getCart(context),
+                        cartData: await value.getCart(getContext()),
                         total: '${await calculateCart()}',
-                        context: context);
+                        context: getContext());
                     setState(() {
                       loading = false;
                     });

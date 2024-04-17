@@ -13,13 +13,16 @@ Future<void> addToCart(
         .collection('user')
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc['email'] == FirebaseAuth.instance.currentUser!.email) {
-          _userRef.doc(doc.reference.path.split('/')[1]).update({
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        if (querySnapshot.docs[i]['email'] ==
+            FirebaseAuth.instance.currentUser!.email) {
+          _userRef
+              .doc(querySnapshot.docs[i].reference.path.split('/')[1])
+              .update({
             'cart': FieldValue.arrayUnion([cartData])
           });
         }
-      });
+      }
     });
     showDialog(
         context: context,
@@ -59,27 +62,31 @@ class CartProvider extends ChangeNotifier {
         .collection('user')
         .get()
         .then((QuerySnapshot value) {
-      value.docs.forEach((doc) {
-        if (doc['email'] == FirebaseAuth.instance.currentUser!.email) {
-          try {
-            cartList = List.from(doc['cart']);
-          } catch (e) {
-            showDialog(
-                context: (context),
-                builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('cancel'))
-                      ],
-                      content: Text(e.toString()),
-                      title: const Text('error'),
-                    ));
+      for (int i = 0; i < value.docs.length; i++) {
+        if (value.docs[i]['email'] ==
+            FirebaseAuth.instance.currentUser!.email) {
+          if (value.docs[i]['email'] ==
+              FirebaseAuth.instance.currentUser!.email) {
+            try {
+              cartList = List.from(value.docs[i]['cart']);
+            } catch (e) {
+              showDialog(
+                  context: (context),
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('cancel'))
+                        ],
+                        content: Text(e.toString()),
+                        title: const Text('error'),
+                      ));
+            }
           }
         }
-      });
+      }
     });
 
     return cartList;
@@ -92,13 +99,16 @@ Future<void> removeFromCart({required obj, required context}) async {
         .collection('user')
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc['email'] == FirebaseAuth.instance.currentUser!.email) {
-          _userRef.doc(doc.reference.path.split('/')[1]).update({
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        if (querySnapshot.docs[i]['email'] ==
+            FirebaseAuth.instance.currentUser!.email) {
+          _userRef
+              .doc(querySnapshot.docs[i].reference.path.split('/')[1])
+              .update({
             'cart': FieldValue.arrayRemove([obj]),
           });
         }
-      });
+      }
     });
   } catch (e) {
     showDialog(

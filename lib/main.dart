@@ -13,16 +13,18 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => WrapperProvider()),
-      ChangeNotifierProvider(create: (context) => UserProvider()),
-      ChangeNotifierProvider(create: (context) => HomeProvider()),
-      ChangeNotifierProvider(create: ((context) => CartProvider()))
-    ],
-    child: const MaterialApp(
-      home: Wrapper(),
-      debugShowCheckedModeBanner: false,
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => WrapperProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
+        ChangeNotifierProvider(create: ((context) => CartProvider()))
+      ],
+      child: const MaterialApp(
+        home: Wrapper(),
+        debugShowCheckedModeBanner: false,
+      ),
     ),
-  ));
+  );
 }

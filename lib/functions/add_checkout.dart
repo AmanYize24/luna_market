@@ -14,42 +14,44 @@ Future<void> addToCheckout(
     required List cartData,
     required String total,
     required context}) async {
-  checkout
-      .add({
-        'name': name,
-        'payment proof': proofImg,
-        'email': FirebaseAuth.instance.currentUser!.email,
-        'phone': phone,
-        "payment method": paymentMethod,
-        'cart': cartData,
-        'total': total,
-      })
-      .then((value) => showDialog(
-          context: (context),
-          builder: (context) => AlertDialog(
-                title: const Text('Order Submitted'),
-                content: const Text('Wait for confirmation'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Ok'))
-                ],
-              )))
-      .catchError((error) {
-        showDialog(
-            context: (context),
-            builder: (context) => AlertDialog(
-                  title: const Text('faild to add user'),
-                  content: Text('$error'),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Cancel'))
-                  ],
-                ));
-      });
+  try {
+    checkout.add({
+      'name': name,
+      'payment proof': proofImg,
+      'email': FirebaseAuth.instance.currentUser!.email,
+      'phone': phone,
+      "payment method": paymentMethod,
+      'cart': cartData,
+      'total': total,
+    }).then(
+      (value) => showDialog(
+        context: (context),
+        builder: (context) => AlertDialog(
+          title: const Text('Order Submitted'),
+          content: const Text('Wait for confirmation'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'))
+          ],
+        ),
+      ),
+    );
+  } catch (e) {
+    showDialog(
+        context: (context),
+        builder: (context) => AlertDialog(
+              title: const Text('error'),
+              content: Text('$e'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Ok'))
+              ],
+            ));
+  }
 }

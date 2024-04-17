@@ -1,12 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:luna_market/screens/category.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:luna_market/functions/home_functions.dart';
 import 'package:luna_market/provider/home_provider.dart';
 import 'package:luna_market/screens/cart.dart';

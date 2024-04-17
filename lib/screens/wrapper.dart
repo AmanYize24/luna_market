@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:luna_market/admin/screens/admin_login.dart';
 
 import 'package:luna_market/screens/verify.dart';
 
@@ -25,6 +27,7 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
   }
 
+  int counter = 0;
   Widget wrap() {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -34,12 +37,27 @@ class _WrapperState extends State<Wrapper> {
           height: double.infinity,
           child: ListView(
             children: [
-              const SizedBox(
-                width: double.infinity,
-                height: 300,
-                child: Image(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/luna-market-logo.jfif"),
+              GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    counter += 1;
+                    print(counter);
+                  });
+                  if (counter == 5) {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AdminLogin()));
+                    setState(() {
+                      counter = 0;
+                    });
+                  }
+                },
+                child: const SizedBox(
+                  width: double.infinity,
+                  height: 300,
+                  child: Image(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/images/luna-market-logo.jfif"),
+                  ),
                 ),
               ),
               box(0, 20),
