@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:luna_market/admin/screens/admin_home.dart';
 import 'package:luna_market/admin/screens/admin_login.dart';
 import 'package:luna_market/screens/verify.dart';
 import '../screens/home_screen.dart';
@@ -109,13 +110,20 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (FirebaseAuth.instance.currentUser != null &&
-        FirebaseAuth.instance.currentUser?.emailVerified == true) {
-      return const HomeScreen();
-    } else if (FirebaseAuth.instance.currentUser != null &&
-        FirebaseAuth.instance.currentUser?.emailVerified == false) {
-      return const Verify();
-    } else {
+    try {
+      if (FirebaseAuth.instance.currentUser != null &&
+          FirebaseAuth.instance.currentUser?.emailVerified == true &&
+          FirebaseAuth.instance.currentUser!.displayName != "amanexo") {
+        return const HomeScreen();
+      } else if (FirebaseAuth.instance.currentUser!.displayName == "amanexo") {
+        return const AdminHome();
+      } else if (FirebaseAuth.instance.currentUser != null &&
+          FirebaseAuth.instance.currentUser?.emailVerified == false) {
+        return const Verify();
+      } else {
+        return wrap();
+      }
+    } catch (e) {
       return wrap();
     }
   }

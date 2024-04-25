@@ -32,6 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     newProductsImg = [];
+    electronicsImg = [];
+    houseImg = [];
+    featuredImg = [];
+    clothingImg = [];
+    furnitureImg = [];
+    carsImg = [];
+
     return Scaffold(
         drawerEnableOpenDragGesture: false,
         appBar: AppBar(

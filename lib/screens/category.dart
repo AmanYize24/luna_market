@@ -27,6 +27,13 @@ class _CategoryState extends State<Category> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.name),
+        leading: IconButton(
+            onPressed: () {
+              newProductsImg = [];
+
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: FutureBuilder(
           future: widget.waitFor,

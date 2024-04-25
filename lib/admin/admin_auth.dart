@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_market/admin/screens/admin_home.dart';
 
@@ -16,9 +17,38 @@ Future<void> getAdmin(
         email = querySnapshot.docs[i]['email'];
         password = querySnapshot.docs[i]['password'];
         if (emailIn == email && passwordIn == password) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const AdminHome(),
-          ));
+          try {
+            Future<void> signInAdmin() async {
+              await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(email: email, password: password);
+              if (FirebaseAuth.instance.currentUser != null) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const AdminHome(),
+                ));
+              }
+            }
+
+            signInAdmin();
+          } catch (e) {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: const Text('couldnt sign in'),
+                      content: const Text('please try again'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Ok'))
+                      ],
+                    ));
+          }
+          if (FirebaseAuth.instance.currentUser != null) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const AdminHome(),
+            ));
+          }
         } else {
           showDialog(
               context: context,

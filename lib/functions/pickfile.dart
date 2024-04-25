@@ -5,15 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-Future<PlatformFile> imgPath({required context}) async {
+Future<File> imgPath({required context}) async {
   try {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(withData: true);
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      PlatformFile file = PlatformFile(
-          name: result.files.first.name,
-          bytes: result.files.first.bytes,
-          size: result.files.first.size);
+      File file = File("${result.files.single.path}");
 
       return file;
     }
@@ -21,7 +17,7 @@ Future<PlatformFile> imgPath({required context}) async {
     showDialog(
         context: (context),
         builder: (context) => AlertDialog(
-              title: const Text('Error'),
+              title: const Text('Error from Img Path'),
               content: Text('$e'),
               actions: [
                 TextButton(
@@ -32,14 +28,14 @@ Future<PlatformFile> imgPath({required context}) async {
               ],
             ));
   }
-  return PlatformFile(name: '', bytes: null, size: 0);
+  return File('');
 }
 
 Future<String> pickFile({required file, required context}) async {
   final checkoutRef = FirebaseStorage.instance.ref().child('Checkout');
 
   try {
-    final uploadRef = File(file.bytes);
+    final uploadRef = File(file.path);
 
     try {
       await checkoutRef

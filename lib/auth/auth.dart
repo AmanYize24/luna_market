@@ -67,7 +67,6 @@ Future<void> createUser(
             .push(MaterialPageRoute(builder: (context) => const Verify()));
       }
     } on FirebaseAuthException catch (e) {
-      print('the firebase error is ${e.code}');
       if (e.code == 'invalid-email') {
         showDialog(
             context: context,

@@ -1,4 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:luna_market/admin/screens/order.dart';
+import 'package:luna_market/admin/screens/products.dart';
+import 'package:luna_market/auth/auth.dart';
+import 'package:luna_market/functions/firebase_storage_functions.dart';
+import 'package:luna_market/screens/wrapper.dart';
+import 'package:luna_market/widgets/adminDashboardBtn.dart';
+import '../admin_firestore.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -8,25 +16,75 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-        'Admin Home',
-      )),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Colors.blueAccent.withOpacity(0.1),
-          Colors.purpleAccent.withOpacity(0.5),
-        ])),
-        child: ListView(
-          children: [],
+        title: const Text(
+          'Admin Home',
         ),
+        actions: [
+          TextButton(
+              onPressed: () async {
+                await signOut(context);
+                if (FirebaseAuth.instance.currentUser != null) {
+                } else {
+                  void goTo() {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const Wrapper()));
+                  }
+
+                  goTo();
+                }
+              },
+              child: const Text('Logout')),
+        ],
       ),
+      body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      "https://cdn.pixabay.com/photo/2024/04/04/12/26/ai-generated-8675021_1280.png"))),
+          child: FutureBuilder(
+              future: getData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(
+                    children: [
+                      adminDashboardBtn(
+                          btnName: ' There are ${snapshot.data!.length} Orders',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const Orders()));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'Featured Products',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "Featured",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                    ],
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return const Text('Error');
+                }
+              })),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class _CheckoutState extends State<Checkout> {
   String email = "${FirebaseAuth.instance.currentUser!.email}";
   String phoneNumber = '';
   String paymentMethod = '';
-  PlatformFile proofImgUrl = PlatformFile(name: '', bytes: null, size: 0);
+  File proofImgUrl = File('');
   bool loading = false;
   Future<double> calculateCart() async {
     double total = 0;
@@ -268,9 +268,9 @@ class _CheckoutState extends State<Checkout> {
                           SizedBox(
                               width: 65,
                               height: 65,
-                              child: proofImgUrl.bytes == null
+                              child: proofImgUrl.path == ''
                                   ? const Icon(Icons.add_a_photo)
-                                  : Image.memory(proofImgUrl.bytes!)),
+                                  : Image.file(proofImgUrl)),
                           TextButton(
                               onPressed: () async {
                                 proofImgUrl = await imgPath(context: context);

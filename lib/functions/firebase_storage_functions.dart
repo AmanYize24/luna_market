@@ -24,7 +24,7 @@ List<Widget> carsImg = [];
 List<Widget> houseImg = [];
 List<Widget> newProductsImg = [];
 
-Future<void> showFeatured({required context}) async {
+Future<List> showFeatured({required context}) async {
   featuredImg = [];
   var featuredList = await featuredRef.listAll().then((value) => value.items);
   var featuredListPath = [];
@@ -76,7 +76,7 @@ Future<void> showFeatured({required context}) async {
       ),
     ));
   }
-  return;
+  return featuredImg;
 }
 
 Future<List> showElectronics({required context}) async {
@@ -513,6 +513,7 @@ Future<List> showHouse({required context}) async {
 }
 
 Future<List> showNewProducts({required context}) async {
+  newProductsImg = [];
   var newProductsList =
       await newProductsRef.listAll().then((value) => value.items);
   var newProductsListPath = [];
@@ -550,26 +551,30 @@ Future<List> showNewProducts({required context}) async {
 
 Future<List> showViewProducts({required context}) async {
   newProductsImg = [];
-  var houseList = await newProductsRef.listAll().then((value) => value.items);
-  var houseListPath = [];
-  for (int i = 0; i < houseList.length; i++) {
-    houseListPath.add([houseList[i].fullPath, houseList[i].fullPath]);
+
+  var newProductsList =
+      await newProductsRef.listAll().then((value) => value.items);
+  var newProductsListPath = [];
+  for (int i = 0; i < newProductsList.length; i++) {
+    newProductsListPath
+        .add([newProductsList[i].fullPath, newProductsList[i].fullPath]);
   }
-  for (int i = 0; i < houseListPath.length; i++) {
-    final houseImgUrl =
-        await storageRef.child(houseListPath[i][0]).getDownloadURL();
-    final housePath = storageRef.child(houseListPath[i][1]);
-    final houseName = housePath.fullPath.split('&')[0].split('/')[1];
-    final housePrice = housePath.fullPath.split('&')[1];
-    final houseDescription = housePath.fullPath.split('&')[2];
-    houseImg.add(GestureDetector(
+  for (int i = 0; i < newProductsListPath.length; i++) {
+    final newProductsImgUrl =
+        await storageRef.child(newProductsListPath[i][0]).getDownloadURL();
+    final newProductsPath = storageRef.child(newProductsListPath[i][1]);
+    final newProductsName =
+        newProductsPath.fullPath.split('&')[0].split('/')[1];
+    final newProductsPrice = newProductsPath.fullPath.split('&')[1];
+    final newProductsDescription = newProductsPath.fullPath.split('&')[2];
+    newProductsImg.add(GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Details(
-                  imgUrl: houseImgUrl,
-                  name: houseName,
-                  price: housePrice,
-                  description: houseDescription,
+                  imgUrl: newProductsImgUrl,
+                  name: newProductsName,
+                  price: newProductsPrice,
+                  description: newProductsDescription,
                 )));
       },
       child: Container(
@@ -592,7 +597,7 @@ Future<List> showViewProducts({required context}) async {
                       width: 200,
                       height: 200,
                       fit: BoxFit.contain,
-                      image: NetworkImage(houseImgUrl)),
+                      image: NetworkImage(newProductsImgUrl)),
                 )),
             box(0, 10),
             Align(
@@ -610,7 +615,7 @@ Future<List> showViewProducts({required context}) async {
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.w800),
-                          houseName),
+                          newProductsName),
                     ),
                     box(0, 10),
                     SizedBox(
@@ -620,7 +625,7 @@ Future<List> showViewProducts({required context}) async {
                               color: Colors.grey,
                               fontSize: 15,
                               fontWeight: FontWeight.w800),
-                          housePrice),
+                          newProductsPrice),
                     ),
                   ],
                 ),
