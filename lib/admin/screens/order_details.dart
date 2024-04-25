@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:luna_market/admin/screens/showProof.dart';
+import 'package:luna_market/admin/screens/show_proof.dart';
 
 class OrderDetails extends StatefulWidget {
   final List cart;

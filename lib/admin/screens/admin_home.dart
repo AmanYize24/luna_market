@@ -5,7 +5,7 @@ import 'package:luna_market/admin/screens/products.dart';
 import 'package:luna_market/auth/auth.dart';
 import 'package:luna_market/functions/firebase_storage_functions.dart';
 import 'package:luna_market/screens/wrapper.dart';
-import 'package:luna_market/widgets/adminDashboardBtn.dart';
+import 'package:luna_market/widgets/admin_dashboard_btn.dart';
 import '../admin_firestore.dart';
 
 class AdminHome extends StatefulWidget {
