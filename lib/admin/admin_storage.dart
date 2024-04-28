@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 Future<String> chooseFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -48,22 +49,86 @@ Future<bool> deleteProduct(
     required String name,
     required String price,
     required String ext,
-    required String description}) async {
+    required String description,
+    required context}) async {
   bool checkDelete = false;
   final storageRef = FirebaseStorage.instance.ref();
   try {
     final item = storageRef.child("$refName/$name&$price&$description&.$ext");
 
-    print("item found at $item");
     await item.delete();
     checkDelete = true;
   } catch (e) {
-    print(e);
+    showDialog(
+        context: (context),
+        builder: (context) => AlertDialog(
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('ok'))
+              ],
+              content: Text("$e"),
+              title: const Text('delete product error'),
+            ));
     checkDelete = false;
   }
   return checkDelete;
 }
 
 Future<String> pickUploadFile() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  if (result != null) {
+    File file = File(result.files.single.path!);
+    return file.path;
+  } else {
+    // User canceled the picker
+  }
   return " ";
+}
+
+Future<bool> uploadProduct(
+    {required String filePath,
+    required String ref,
+    required String name,
+    required String price,
+    required String ext,
+    required context,
+    required String description}) async {
+  final storageRef = FirebaseStorage.instance.ref();
+  final locationRef = storageRef.child("$ref/$name&$price&$description&.$ext");
+  try {
+    await locationRef.putFile(File(filePath));
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Success"),
+              content: const Text("File Uploaded"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("ok"))
+              ],
+            ));
+    return true;
+  } catch (e) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("upload file error"),
+              content: Text("$e"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("ok"))
+              ],
+            ));
+  }
+  return false;
 }

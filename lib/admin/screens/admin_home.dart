@@ -74,6 +74,78 @@ class _AdminHomeState extends State<AdminHome> {
                                       },
                                     )));
                           }),
+                      adminDashboardBtn(
+                          btnName: 'New Products',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "New Products",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'Electronics',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "Electronics",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'Clothing',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "Clothing",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'Furniture',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "Furniture",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'Cars',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "Cars",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
+                      adminDashboardBtn(
+                          btnName: 'House',
+                          onPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Products(
+                                      title: "House",
+                                      productList: featuredImg,
+                                      products: () async {
+                                        await showFeatured(context: context);
+                                      },
+                                    )));
+                          }),
                     ],
                   );
                 } else if (snapshot.connectionState ==

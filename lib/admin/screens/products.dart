@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_market/admin/admin_storage.dart';
+import 'package:luna_market/admin/screens/add_products.dart';
 import 'package:luna_market/widgets/box.dart';
 
 class Products extends StatefulWidget {
@@ -50,9 +51,9 @@ class _ProductsState extends State<Products> {
                                         child: Container(
                                           width: 360,
                                           height: 150,
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               vertical: 10, horizontal: 5),
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               vertical: 10),
                                           decoration: BoxDecoration(
                                               border: Border.all(
@@ -148,6 +149,7 @@ class _ProductsState extends State<Products> {
                                                     arr[arr.length - 1]
                                                         .split("?")[0];
                                                 await deleteProduct(
+                                                    context: context,
                                                     refName: widget.title,
                                                     name: snapshot.data![index]
                                                         ["name"],
@@ -191,7 +193,11 @@ class _ProductsState extends State<Products> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purpleAccent),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                AddProducts(ref: widget.title)));
+                      },
                       child: Text(
                           style: GoogleFonts.inter(
                               color: Colors.white,

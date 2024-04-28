@@ -11,6 +11,7 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +52,54 @@ class _OrdersState extends State<Orders> {
                                       const EdgeInsets.symmetric(vertical: 10),
                                   decoration: BoxDecoration(
                                       gradient: const LinearGradient(
-                                          colors: [Colors.teal, Colors.black]),
+                                          colors: [Colors.teal, Colors.grey]),
                                       border: Border.all(color: Colors.black)),
                                   width: 350,
                                   height: 60,
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      SizedBox(
+                                        width: 300,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              style: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                              'from: ${snapshot.data![index]["email"]}'),
                                         ),
-                                        'from: ${snapshot.data![index]["email"]}'),
+                                      ),
+                                      SizedBox(
+                                        width: 50,
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                setState(() {
+                                                  loading = true;
+                                                });
+                                                await deleteOrder(
+                                                    email:
+                                                        "${snapshot.data![index]["email"]}",
+                                                    context: context);
+                                                setState(() {
+                                                  loading = false;
+                                                });
+                                              },
+                                              icon: loading
+                                                  ? const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )
+                                                  : const Icon(
+                                                      size: 30,
+                                                      color: Colors.white,
+                                                      Icons.delete),
+                                            )),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ));
