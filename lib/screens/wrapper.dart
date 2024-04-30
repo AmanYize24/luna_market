@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_market/admin/screens/admin_home.dart';
 import 'package:luna_market/admin/screens/admin_login.dart';
+import 'package:luna_market/screens/support_login.dart';
 import 'package:luna_market/screens/verify.dart';
 import '../screens/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,7 @@ class _WrapperState extends State<Wrapper> {
   }
 
   int counter = 0;
+  int support = 0;
   Widget wrap() {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -58,11 +60,21 @@ class _WrapperState extends State<Wrapper> {
                 ),
               ),
               box(0, 20),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  style: GoogleFonts.notoSerifEthiopic(fontSize: 25),
-                  "ሰላም",
+              GestureDetector(
+                onTap: () {
+                  support += 1;
+                  if (support == 7) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SupportLogin()));
+                    support = 0;
+                  }
+                },
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    style: GoogleFonts.notoSerifEthiopic(fontSize: 25),
+                    "ሰላም",
+                  ),
                 ),
               ),
               box(0, 20),

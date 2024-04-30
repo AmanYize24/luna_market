@@ -6,8 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_market/functions/home_functions.dart';
 import 'package:luna_market/provider/home_provider.dart';
 import 'package:luna_market/screens/cart.dart';
+import 'package:luna_market/screens/customer_service.dart';
 import 'package:luna_market/screens/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:luna_market/screens/search.dart';
 import 'package:luna_market/widgets/box.dart';
 import 'package:luna_market/widgets/profile_icon.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Cart()));
                 },
-                icon: const Icon(Icons.shopping_cart))
+                icon: const Icon(Icons.shopping_cart)),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Search()));
+                },
+                icon: const Icon(Icons.search))
           ],
           title: Center(
               child: Text(
@@ -161,6 +169,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold),
                                   'Cart'),
+                            ],
+                          ),
+                        ),
+                      )),
+                  box(0, 20),
+                  GestureDetector(
+                      onTap: () async {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const CustomerService()));
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            gradient: const LinearGradient(colors: [
+                              Color.fromARGB(255, 60, 0, 72),
+                              Colors.transparent
+                            ])),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.shopping_cart,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                  style: GoogleFonts.inter(
+                                      color: Colors.white,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                  'Customer Service'),
                             ],
                           ),
                         ),
