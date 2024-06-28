@@ -12,10 +12,8 @@ Future<List> getSupport(
     return value.docs;
   });
   for (int i = 0; i < support.length; i++) {
-    if (email == support[i]["email"]) {
+    if (email == support[i]["email"] && password == support[i]["password"]) {
       try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Support()));
       } catch (e) {

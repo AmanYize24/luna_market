@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_market/admin/admin_storage.dart';
@@ -16,7 +17,7 @@ class _AddProductsState extends State<AddProducts> {
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  String imgPath = "";
+  dynamic imgPath;
   String name = "";
   String price = "";
   String description = "";
@@ -33,6 +34,11 @@ class _AddProductsState extends State<AddProducts> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2022/01/16/20/38/coffee-6943139_1280.jpg'))),
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
@@ -43,15 +49,23 @@ class _AddProductsState extends State<AddProducts> {
               child: Align(
                 alignment: Alignment.center,
                 child: IconButton(
-                    onPressed: () async {
-                      imgPath = await pickUploadFile();
-                      setState(() {
-                        imgPath;
-                      });
-                    },
-                    icon: imgPath == ""
-                        ? const Icon(Icons.add_a_photo)
-                        : Image.file(fit: BoxFit.contain, File(imgPath))),
+                  onPressed: () async {
+                    imgPath = await pickUploadFile();
+                    setState(() {
+                      imgPath;
+                    });
+                  },
+                  icon: imgPath == null
+                      ? const Icon(Icons.add_a_photo)
+                      : (kIsWeb
+                          ? (Image.memory(
+                              imgPath,
+                            ))
+                          : Image.file(
+                              fit: BoxFit.contain,
+                              File(imgPath),
+                            )),
+                ),
               ),
             ),
             box(0, 10),

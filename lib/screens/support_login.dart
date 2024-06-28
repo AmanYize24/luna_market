@@ -21,47 +21,48 @@ class _SupportLoginState extends State<SupportLogin> {
         title: const Center(child: Text("Support Login")),
         actions: [box(25, 0)],
       ),
-      body: SizedBox(
+      body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    "https://cdn.pixabay.com/photo/2023/12/07/10/52/snow-8435305_1280.jpg"))),
         child: ListView(
           children: [
             box(0, 150),
             Align(
               alignment: Alignment.topCenter,
-              child: SizedBox(
+              child: Container(
                 width: 325,
                 height: 50,
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                 child: TextField(
                   controller: email,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    hintText: "email",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
+                  decoration: const InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      hintText: "email",
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
               ),
             ),
             box(0, 25),
             Align(
               alignment: Alignment.topCenter,
-              child: SizedBox(
+              child: Container(
                 width: 325,
                 height: 45,
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                 child: TextField(
                   controller: password,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    hintText: "password",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
+                  decoration: const InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      hintText: "password",
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
               ),
             ),

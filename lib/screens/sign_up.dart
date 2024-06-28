@@ -18,7 +18,7 @@ class _SignUpState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController displayNameController = TextEditingController();
-   bool loading = false;
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,11 @@ class _SignUpState extends State<SignUpScreen> {
         automaticallyImplyLeading: false,
       ),
       body: Container(
-          decoration: wrapperBackground,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2022/01/25/12/53/tree-6966126_960_720.jpg'))),
           width: double.infinity,
           height: double.infinity,
           child: ListView(
@@ -52,9 +56,13 @@ class _SignUpState extends State<SignUpScreen> {
                   controller: confirmPasswordController),
               box(0, 50),
               accountBtn(
-                  choiceText: loading ? const CircularProgressIndicator() : const Text(  style: TextStyle(fontSize: 25, color: Colors.black),"Create Account"),
-                  userChoice: () async{
-                     setState(() {
+                  choiceText: loading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          style: TextStyle(fontSize: 25, color: Colors.black),
+                          "Create Account"),
+                  userChoice: () async {
+                    setState(() {
                       loading = true;
                     });
                     await createUser(
@@ -63,7 +71,7 @@ class _SignUpState extends State<SignUpScreen> {
                         password: passwordController.text,
                         confirmPassword: confirmPasswordController.text,
                         displayName: displayNameController.text);
-                   setState(() {
+                    setState(() {
                       loading = false;
                     });
                   }),

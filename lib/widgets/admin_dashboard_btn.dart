@@ -9,27 +9,23 @@ Widget adminDashboardBtn({required String btnName, required onPress}) {
     child: Align(
       alignment: Alignment.topLeft,
       child: Container(
-        width: double.infinity,
-        height: 60,
+        width: 185,
+        height: 125,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         decoration: BoxDecoration(
-          gradient:
-              const LinearGradient(colors: [Colors.tealAccent, Colors.white]),
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(255, 255, 255, 0.5),
+            Color.fromRGBO(255, 255, 255, 0.8)
+          ]),
+          border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
         ),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
               style: GoogleFonts.inter(
-                  color: Colors.pinkAccent,
+                  color: Colors.black,
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
               btnName),

@@ -26,9 +26,14 @@ class _ProductsState extends State<Products> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: SizedBox(
+        body: Container(
           width: double.infinity,
           height: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971552_1280.jpg'))),
           child: ListView(
             children: [
               SizedBox(
@@ -40,138 +45,152 @@ class _ProductsState extends State<Products> {
                       if (snapshot.hasData) {
                         return ListView.builder(
                             itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) => SizedBox(
-                                  width: double.infinity,
-                                  height: 150,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Container(
-                                          width: 360,
-                                          height: 150,
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 5),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black)),
-                                          child: ListView(
-                                            scrollDirection: Axis.horizontal,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topLeft,
-                                                child: SizedBox(
-                                                    width: 150,
-                                                    height: 150,
-                                                    child: Image(
-                                                      fit: BoxFit.contain,
-                                                      image: NetworkImage(
-                                                          '${snapshot.data![index]["url"]}'),
-                                                    )),
-                                              ),
-                                              box(10, 0),
-                                              Column(
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: SizedBox(
-                                                        width: 200,
-                                                        height: 25,
-                                                        child: Text(
-                                                            style: GoogleFonts.inter(
+                            itemBuilder: (context, index) => Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 150,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(colors: [
+                                          Color.fromRGBO(255, 255, 255, 0.8),
+                                          Color.fromRGBO(255, 255, 255, 0.3)
+                                        ]),
+                                        border:
+                                            Border.all(color: Colors.white)),
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                            width: 360,
+                                            height: 150,
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 5),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: ListView(
+                                              scrollDirection: Axis.horizontal,
+                                              children: [
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: SizedBox(
+                                                      width: 150,
+                                                      height: 150,
+                                                      child: Image(
+                                                        fit: BoxFit.contain,
+                                                        image: NetworkImage(
+                                                            '${snapshot.data![index]["url"]}'),
+                                                      )),
+                                                ),
+                                                box(10, 0),
+                                                Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: SizedBox(
+                                                          width: 200,
+                                                          height: 25,
+                                                          child: Text(
+                                                              style: GoogleFonts.inter(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                              '${snapshot.data![index]["name"]}')),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: SizedBox(
+                                                          width: 200,
+                                                          height: 25,
+                                                          child: Text(
+                                                              style: GoogleFonts
+                                                                  .inter(
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600),
-                                                            '${snapshot.data![index]["name"]}')),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: SizedBox(
-                                                        width: 200,
-                                                        height: 25,
-                                                        child: Text(
-                                                            style: GoogleFonts
-                                                                .inter(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            '${snapshot.data![index]["price"]}')),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: SizedBox(
-                                                        width: 220,
-                                                        height: 50,
-                                                        child: Text(
-                                                            style: GoogleFonts
-                                                                .inter(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 11,
-                                                            ),
-                                                            '${snapshot.data![index]["description"]}')),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              '${snapshot.data![index]["price"]}')),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: SizedBox(
+                                                          width: 220,
+                                                          height: 50,
+                                                          child: Text(
+                                                              style: GoogleFonts
+                                                                  .inter(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 11,
+                                                              ),
+                                                              '${snapshot.data![index]["description"]}')),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Container(
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black)),
-                                          height: 130,
-                                          child: IconButton(
-                                              onPressed: () async {
-                                                setState(() {
-                                                  loading = true;
-                                                });
-                                                final List arr = snapshot
-                                                    .data![index]["url"]
-                                                    .split(".");
-                                                final String ext =
-                                                    arr[arr.length - 1]
-                                                        .split("?")[0];
-                                                await deleteProduct(
-                                                    context: context,
-                                                    refName: widget.title,
-                                                    name: snapshot.data![index]
-                                                        ["name"],
-                                                    price: snapshot.data![index]
-                                                        ["price"],
-                                                    ext: ext,
-                                                    description:
-                                                        snapshot.data![index]
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 130,
+                                            child: Center(
+                                              child: IconButton(
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      loading = true;
+                                                    });
+                                                    final List arr = snapshot
+                                                        .data![index]["url"]
+                                                        .split(".");
+                                                    final String ext =
+                                                        arr[arr.length - 1]
+                                                            .split("?")[0];
+                                                    await deleteProduct(
+                                                        context: context,
+                                                        refName: widget.title,
+                                                        name: snapshot
+                                                                .data![index]
+                                                            ["name"],
+                                                        price: snapshot
+                                                                .data![index]
+                                                            ["price"],
+                                                        ext: ext,
+                                                        description: snapshot
+                                                                .data![index]
                                                             ["description"]);
-                                                setState(() {
-                                                  loading = false;
-                                                });
-                                              },
-                                              icon: loading
-                                                  ? const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    )
-                                                  : const Icon(Icons.delete)),
-                                        ),
-                                      )
-                                    ],
+                                                    setState(() {
+                                                      loading = false;
+                                                    });
+                                                  },
+                                                  icon: loading
+                                                      ? const Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        )
+                                                      : const Icon(
+                                                          size: 30,
+                                                          color:
+                                                              Colors.pinkAccent,
+                                                          Icons.delete)),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ));
                       } else if (snapshot.connectionState ==

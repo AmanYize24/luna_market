@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_market/screens/details.dart';
 import 'package:luna_market/widgets/box.dart';
 import 'package:luna_market/widgets/card.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
 final featuredRef = storageRef.child('Featured');
@@ -23,8 +24,13 @@ List<Widget> furnitureImg = [];
 List<Widget> carsImg = [];
 List<Widget> houseImg = [];
 List<Widget> newProductsImg = [];
-
+double imgHeight = 0;
 Future<List> showFeatured({required context}) async {
+  if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+    imgHeight = 180;
+  } else {
+    imgHeight = 270;
+  }
   featuredImg = [];
   var featuredList = await featuredRef.listAll().then((value) => value.items);
   var featuredListPath = [];
@@ -58,7 +64,7 @@ Future<List> showFeatured({required context}) async {
                   borderRadius: BorderRadius.circular(10),
                   child: Image(
                       width: double.infinity,
-                      height: 180,
+                      height: imgHeight,
                       fit: BoxFit.fitHeight,
                       image: NetworkImage(featuredImgUrl)),
                 )),

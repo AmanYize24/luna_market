@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:luna_market/screens/sign_up.dart';
@@ -29,7 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
         automaticallyImplyLeading: false,
       ),
       body: Container(
-          decoration: wrapperBackground,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2022/01/25/12/53/tree-6966126_960_720.jpg'))),
           width: double.infinity,
           height: double.infinity,
           child: ListView(
@@ -44,8 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController),
               box(0, 30),
               accountBtn(
-                  choiceText: loading ? const CircularProgressIndicator() : const Text(  style: TextStyle(fontSize: 25, color: Colors.black),"Login"),
-                  userChoice: () async{
+                  choiceText: loading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          style: TextStyle(fontSize: 25, color: Colors.black),
+                          "Login"),
+                  userChoice: () async {
                     setState(() {
                       loading = true;
                     });

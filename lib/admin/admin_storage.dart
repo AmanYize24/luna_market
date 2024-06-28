@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 Future<String> chooseFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -77,20 +78,24 @@ Future<bool> deleteProduct(
   return checkDelete;
 }
 
-Future<String> pickUploadFile() async {
+Future<dynamic> pickUploadFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-  if (result != null) {
-    File file = File(result.files.single.path!);
-    return file.path;
+  if (kIsWeb) {
+    dynamic file = result!.files.single.bytes;
+    return file;
   } else {
-    // User canceled the picker
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      return file.path;
+    } else {
+      // User canceled the picker
+    }
   }
-  return " ";
 }
 
 Future<bool> uploadProduct(
-    {required String filePath,
+    {required dynamic filePath,
     required String ref,
     required String name,
     required String price,
@@ -100,7 +105,13 @@ Future<bool> uploadProduct(
   final storageRef = FirebaseStorage.instance.ref();
   final locationRef = storageRef.child("$ref/$name&$price&$description&.$ext");
   try {
-    await locationRef.putFile(File(filePath));
+    if (kIsWeb) {
+      print('Uploading to web');
+      await locationRef.putData(filePath);
+    } else {
+      await locationRef.putFile(File(filePath));
+    }
+
     showDialog(
         context: context,
         builder: (context) => AlertDialog(

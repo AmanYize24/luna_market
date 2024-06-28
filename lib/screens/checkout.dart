@@ -1,5 +1,7 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 
@@ -31,8 +33,11 @@ class _CheckoutState extends State<Checkout> {
   String email = "${FirebaseAuth.instance.currentUser!.email}";
   String phoneNumber = '';
   String paymentMethod = '';
-  File proofImgUrl = File('');
+  dynamic proofImgUrl;
+  bool isWeb = kIsWeb;
+
   bool loading = false;
+
   Future<double> calculateCart() async {
     double total = 0;
     try {
@@ -268,9 +273,13 @@ class _CheckoutState extends State<Checkout> {
                           SizedBox(
                               width: 65,
                               height: 65,
-                              child: proofImgUrl.path == ''
-                                  ? const Icon(Icons.add_a_photo)
-                                  : Image.file(proofImgUrl)),
+                              child: isWeb
+                                  ? (proofImgUrl == null
+                                      ? const Icon(Icons.add_a_photo)
+                                      : Image.memory(proofImgUrl!))
+                                  : (proofImgUrl == null
+                                      ? const Icon(Icons.add_a_photo)
+                                      : Image.file(File(proofImgUrl)))),
                           TextButton(
                               onPressed: () async {
                                 proofImgUrl = await imgPath(context: context);
@@ -422,6 +431,7 @@ class _CheckoutState extends State<Checkout> {
                         paymentMethod: paymentMethod,
                         cartData: await value.getCart(getContext()),
                         total: '${await calculateCart()}',
+                        location: location,
                         context: getContext());
                     setState(() {
                       loading = false;

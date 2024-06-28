@@ -11,15 +11,21 @@ class UserRequests extends StatefulWidget {
 }
 
 class _UserRequestsState extends State<UserRequests> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("User Requests"),
       ),
-      body: SizedBox(
+      body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2021/03/11/02/57/mountain-6086083_1280.jpg'),
+                fit: BoxFit.cover)),
         child: ListView(
           children: [
             FutureBuilder(
@@ -49,24 +55,56 @@ class _UserRequestsState extends State<UserRequests> {
                                         vertical: 10),
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey)),
+                                        border: Border.all(color: Colors.white),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white.withOpacity(0.5)),
                                     width: double.infinity,
-                                    height: 90,
+                                    height: 110,
                                     child: ListView(
                                       children: [
                                         Align(
                                           alignment: Alignment.topCenter,
-                                          child: Text(
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w600),
-                                              "${snapshot.data![index]["email"]}"),
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.5)),
+                                            child: Center(
+                                              child: Text(
+                                                  style: GoogleFonts.inter(
+                                                      fontSize: 17,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                  "${snapshot.data![index]["email"]}"),
+                                            ),
+                                          ),
                                         ),
                                         Align(
                                           alignment: Alignment.topCenter,
                                           child: IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(Icons.delete)),
+                                              onPressed: () async {
+                                                setState(() {
+                                                  loading = true;
+                                                });
+                                                await deleteUserRequest(
+                                                    email: snapshot.data![index]
+                                                        ["email"],
+                                                    context: context);
+                                                setState(() {
+                                                  loading = false;
+                                                });
+                                              },
+                                              icon: loading
+                                                  ? const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )
+                                                  : const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.pinkAccent,
+                                                    )),
                                         )
                                       ],
                                     )),

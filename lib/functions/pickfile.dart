@@ -4,12 +4,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-Future<File> imgPath({required context}) async {
+Future<dynamic> imgPath({required context}) async {
   try {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      File file = File("${result.files.single.path}");
+      dynamic file =
+          kIsWeb ? result.files.single.bytes : result.files.single.path;
 
       return file;
     }
@@ -31,64 +33,68 @@ Future<File> imgPath({required context}) async {
   return File('');
 }
 
-Future<String> pickFile({required file, required context}) async {
-  final checkoutRef = FirebaseStorage.instance.ref().child('Checkout');
+Future<String> pickFile(
+    {required dynamic file, required BuildContext context}) async {
+  final String userEmail = FirebaseAuth.instance.currentUser!.email!;
+  final Reference fileRef =
+      FirebaseStorage.instance.ref().child('Checkout').child('$userEmail.png');
 
   try {
-    final uploadRef = File(file.path);
-
-    try {
-      await checkoutRef
-          .child('/${FirebaseAuth.instance.currentUser!.email}.png')
-          .putFile(uploadRef);
-      try {
-        return checkoutRef
-            .child('/${FirebaseAuth.instance.currentUser!.email}.png')
-            .getDownloadURL();
-      } catch (e) {
-        showDialog(
-            context: (context),
-            builder: (context) => AlertDialog(
-                  title: const Text('Error getting the img url'),
-                  content: Text(e.toString()),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Ok'))
-                  ],
-                ));
-      }
-    } on FirebaseException catch (e) {
-      showDialog(
-          context: (context),
-          builder: (context) => AlertDialog(
-                title: const Text('Error'),
-                content: Text('$e'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'))
-                ],
-              ));
+    UploadTask uploadTask;
+    if (kIsWeb) {
+      Uint8List fileBytes = file;
+      print('Uploading to web');
+      uploadTask = fileRef.putData(fileBytes);
+    } else {
+      File uploadFile = File(file);
+      print('Uploading to mobile');
+      uploadTask = fileRef.putFile(uploadFile);
     }
+
+    // Wait for the upload to complete
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+    print('File upload complete.');
+
+    // Get the download URL
+    String downloadURL = await fileRef.getDownloadURL();
+    print('Download URL obtained: $downloadURL');
+    return downloadURL;
+  } on FirebaseException catch (e) {
+    print('FirebaseException: $e');
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Firebase Error'),
+        content: Text('$e'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
   } catch (e) {
-    showDialog(
-        context: (context),
-        builder: (context) => AlertDialog(
-              title: const Text('Error'),
-              content: Text('$e'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancel'))
-              ],
-            ));
+    print('Exception: $e');
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text('An error occurred: $e'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
   }
+
+  // Return an empty string if an error occurred
   return '';
 }

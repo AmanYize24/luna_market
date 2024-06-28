@@ -22,6 +22,11 @@ class _OrdersState extends State<Orders> {
           width: double.infinity,
           height: double.infinity,
           padding: const EdgeInsets.all(10),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2016/11/23/14/54/snow-1853352_1280.jpg'))),
           child: ListView(children: [
             SizedBox(
               width: double.infinity,
@@ -32,74 +37,89 @@ class _OrdersState extends State<Orders> {
                     if (snapshot.hasData) {
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => OrderDetails(
-                                          cart: snapshot.data![index]['cart'],
-                                          name: snapshot.data![index]['name'],
-                                          paymentProof: snapshot.data![index]
-                                              ["payment proof"],
-                                          total: snapshot.data![index]['total'],
-                                          paymentMethod: snapshot.data![index]
-                                              ['payment method'],
-                                          email: snapshot.data![index]['email'],
-                                          phoneNumber: snapshot.data![index]
-                                              ['phone'])));
-                                },
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                          colors: [Colors.teal, Colors.grey]),
-                                      border: Border.all(color: Colors.black)),
-                                  width: 350,
-                                  height: 60,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      SizedBox(
-                                        width: 300,
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                              'from: ${snapshot.data![index]["email"]}'),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 50,
-                                        child: Align(
+                          itemBuilder: (context, index) => Align(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => OrderDetails(
+                                                cart: snapshot.data![index]
+                                                    ['cart'],
+                                                name: snapshot.data![index]
+                                                    ['name'],
+                                                paymentProof:
+                                                    snapshot.data![index]
+                                                        ["payment proof"],
+                                                total: snapshot.data![index]
+                                                    ['total'],
+                                                paymentMethod:
+                                                    snapshot.data![index]
+                                                        ['payment method'],
+                                                email: snapshot.data![index]
+                                                    ['email'],
+                                                phoneNumber: snapshot
+                                                    .data![index]['phone'])));
+                                  },
+                                  /** Orders */ child: Container(
+                                    width: 390,
+                                    height: 60,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(colors: [
+                                          Color.fromRGBO(255, 255, 255, 0.5),
+                                          Color.fromRGBO(255, 255, 255, 0.5)
+                                        ]),
+                                        border: Border.all(color: Colors.white),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        SizedBox(
+                                          width: 300,
+                                          child: Align(
                                             alignment: Alignment.center,
-                                            child: IconButton(
-                                              onPressed: () async {
-                                                setState(() {
-                                                  loading = true;
-                                                });
-                                                await deleteOrder(
-                                                    email:
-                                                        "${snapshot.data![index]["email"]}",
-                                                    context: context);
-                                                setState(() {
-                                                  loading = false;
-                                                });
-                                              },
-                                              icon: loading
-                                                  ? const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    )
-                                                  : const Icon(
-                                                      size: 30,
-                                                      color: Colors.white,
-                                                      Icons.delete),
-                                            )),
-                                      ),
-                                    ],
+                                            child: Text(
+                                                style: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black,
+                                                ),
+                                                'from: ${snapshot.data![index]["email"]}'),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 100,
+                                          child: Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    loading = true;
+                                                  });
+                                                  await deleteOrder(
+                                                      email:
+                                                          "${snapshot.data![index]["email"]}",
+                                                      context: context);
+                                                  setState(() {
+                                                    loading = false;
+                                                  });
+                                                },
+                                                icon: loading
+                                                    ? const Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      )
+                                                    : const Icon(
+                                                        size: 30,
+                                                        color:
+                                                            Colors.pinkAccent,
+                                                        Icons.delete),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ));

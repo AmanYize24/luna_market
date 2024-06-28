@@ -31,6 +31,10 @@ class _AdminLoginState extends State<AdminLogin> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
+            image: const DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2021/11/30/17/06/tree-6835828_960_720.jpg')),
             border: GradientBoxBorder(
                 width: 5,
                 gradient: LinearGradient(colors: [

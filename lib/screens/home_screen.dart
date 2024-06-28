@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../auth/auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../functions/firebase_storage_functions.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,7 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
     clothingImg = [];
     furnitureImg = [];
     carsImg = [];
-
+    double caroselHeight = 0;
+    try {
+      if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+        caroselHeight = 220;
+      } else {
+        caroselHeight = 310;
+      }
+    } catch (e) {
+      caroselHeight = 310;
+    }
     return Scaffold(
         drawerEnableOpenDragGesture: false,
         appBar: AppBar(
@@ -255,220 +265,234 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          children: [
-            box(0, 20),
-            Text(
-                style: GoogleFonts.inter(
-                    fontSize: 17, fontWeight: FontWeight.bold),
-                'Featured Products'),
-            box(0, 20),
-            FutureBuilder(
-                future: showFeatured(context: context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    return const Text('Active');
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const SizedBox(
-                        width: 300,
-                        height: 300,
-                        child: Center(child: CircularProgressIndicator()));
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.greenAccent.withOpacity(0.1)),
-                      padding: const EdgeInsets.all(10),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: CarouselSlider(
-                            options: CarouselOptions(
-                              height: 220,
-                              autoPlay: true,
-                              enableInfiniteScroll: true,
-                              enlargeCenterPage: true,
-                              enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                              autoPlayInterval: const Duration(seconds: 5),
-                            ),
-                            items: featuredImg.map((i) => i).toList()),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2017/08/02/14/26/winter-landscape-2571788_1280.jpg'))),
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            children: [
+              box(0, 20),
+              Text(
+                  style: GoogleFonts.inter(
+                      fontSize: 17, fontWeight: FontWeight.bold),
+                  'Featured Products'),
+              box(0, 20),
+              FutureBuilder(
+                  future: showFeatured(context: context),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.active) {
+                      return const Text('Active');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const SizedBox(
+                          width: 300,
+                          height: 300,
+                          child: Center(child: CircularProgressIndicator()));
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      return Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent.withOpacity(0.1)),
+                        padding: const EdgeInsets.all(10),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CarouselSlider(
+                              options: CarouselOptions(
+                                height: caroselHeight,
+                                autoPlay: true,
+                                enableInfiniteScroll: true,
+                                enlargeCenterPage: true,
+                                enlargeStrategy:
+                                    CenterPageEnlargeStrategy.scale,
+                                autoPlayInterval: const Duration(seconds: 5),
+                              ),
+                              items: featuredImg.map((i) => i).toList()),
+                        ),
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  }),
+              box(0, 10),
+              Text(
+                  style: GoogleFonts.inter(
+                      fontSize: 17, fontWeight: FontWeight.bold),
+                  'Catagories'),
+              SizedBox(
+                width: double.infinity,
+                height: 80,
+                child: Center(
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      box(15, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Category(
+                                    categoryList: electronicsImg,
+                                    name: 'Electronics',
+                                    waitFor: showElectronics(context: context),
+                                  )));
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.pinkAccent,
+                          maxRadius: 30,
+                          child: Icon(
+                              size: 30,
+                              color: Colors.white,
+                              Icons.electrical_services),
+                        ),
                       ),
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                }),
-            box(0, 10),
-            Text(
-                style: GoogleFonts.inter(
-                    fontSize: 17, fontWeight: FontWeight.bold),
-                'Catagories'),
-            SizedBox(
-              width: double.infinity,
-              height: 80,
-              child: Center(
+                      box(10, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Category(
+                                    categoryList: clothingImg,
+                                    name: 'Clothing',
+                                    waitFor: showClothing(context: context),
+                                  )));
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.greenAccent,
+                          maxRadius: 30,
+                          child: Icon(
+                              size: 30, color: Colors.white, Icons.checkroom),
+                        ),
+                      ),
+                      box(10, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Category(
+                                    categoryList: furnitureImg,
+                                    name: 'Furniture',
+                                    waitFor: showFurniture(context: context),
+                                  )));
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.purpleAccent,
+                          maxRadius: 30,
+                          child:
+                              Icon(size: 30, color: Colors.white, Icons.chair),
+                        ),
+                      ),
+                      box(10, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Category(
+                                    categoryList: carsImg,
+                                    name: 'Cars',
+                                    waitFor: showCars(context: context),
+                                  )));
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.lightBlueAccent,
+                          maxRadius: 30,
+                          child: Icon(
+                              size: 30,
+                              color: Colors.white,
+                              Icons.directions_car),
+                        ),
+                      ),
+                      box(10, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Category(
+                                    categoryList: houseImg,
+                                    name: 'House',
+                                    waitFor: showHouse(context: context),
+                                  )));
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.orangeAccent,
+                          maxRadius: 30,
+                          child:
+                              Icon(size: 30, color: Colors.white, Icons.house),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+                width: double.infinity,
                 child: ListView(
-                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
-                    box(15, 0),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Category(
-                                  categoryList: electronicsImg,
-                                  name: 'Electronics',
-                                  waitFor: showElectronics(context: context),
-                                )));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.pinkAccent,
-                        maxRadius: 30,
-                        child: Icon(
-                            size: 30,
-                            color: Colors.white,
-                            Icons.electrical_services),
-                      ),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                          style: GoogleFonts.inter(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                          'New Products'),
                     ),
-                    box(10, 0),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Category(
-                                  categoryList: clothingImg,
-                                  name: 'Clothing',
-                                  waitFor: showClothing(context: context),
-                                )));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.greenAccent,
-                        maxRadius: 30,
-                        child: Icon(
-                            size: 30, color: Colors.white, Icons.checkroom),
-                      ),
-                    ),
-                    box(10, 0),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Category(
-                                  categoryList: furnitureImg,
-                                  name: 'Furniture',
-                                  waitFor: showFurniture(context: context),
-                                )));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.purpleAccent,
-                        maxRadius: 30,
-                        child: Icon(size: 30, color: Colors.white, Icons.chair),
-                      ),
-                    ),
-                    box(10, 0),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Category(
-                                  categoryList: carsImg,
-                                  name: 'Cars',
-                                  waitFor: showCars(context: context),
-                                )));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightBlueAccent,
-                        maxRadius: 30,
-                        child: Icon(
-                            size: 30,
-                            color: Colors.white,
-                            Icons.directions_car),
-                      ),
-                    ),
-                    box(10, 0),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Category(
-                                  categoryList: houseImg,
-                                  name: 'House',
-                                  waitFor: showHouse(context: context),
-                                )));
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.orangeAccent,
-                        maxRadius: 30,
-                        child: Icon(size: 30, color: Colors.white, Icons.house),
+                    box(100, 0),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Category(
+                                categoryList: newProductsImg,
+                                name: 'New Products',
+                                waitFor: showViewProducts(context: context),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                            style: GoogleFonts.inter(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                            'View more'),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: 40,
-              width: double.infinity,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                        style: GoogleFonts.inter(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                        'New Products'),
-                  ),
-                  box(100, 0),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => Category(
-                              categoryList: newProductsImg,
-                              name: 'New Products',
-                              waitFor: showViewProducts(context: context),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                          style: GoogleFonts.inter(
-                              fontSize: 17, fontWeight: FontWeight.bold),
-                          'View more'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            FutureBuilder(
-                future: showNewProducts(context: context),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return SizedBox(
-                        width: double.infinity,
-                        height: 260,
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: 180,
-                              height: 120,
-                              padding: const EdgeInsets.all(10),
-                              child: snapshot.data![index],
-                            );
-                          },
-                        ));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return const Text('error');
-                  }
-                }),
-            box(0, 20),
-          ],
+              FutureBuilder(
+                  future: showNewProducts(context: context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SizedBox(
+                          width: double.infinity,
+                          height: 260,
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                width: 180,
+                                height: 120,
+                                padding: const EdgeInsets.all(10),
+                                child: snapshot.data![index],
+                              );
+                            },
+                          ));
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return const Text('error');
+                    }
+                  }),
+              box(0, 20),
+            ],
+          ),
         ));
   }
 }

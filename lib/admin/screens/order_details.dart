@@ -32,6 +32,11 @@ class _OrderDetailsState extends State<OrderDetails> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2018/02/18/21/30/coffee-3163596_960_720.jpg'))),
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
@@ -39,8 +44,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               width: double.infinity,
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -63,8 +73,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -88,8 +103,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -111,8 +131,13 @@ class _OrderDetailsState extends State<OrderDetails> {
             Container(
               width: double.infinity,
               height: 200,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.cart.length,
@@ -157,8 +182,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -181,8 +211,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               width: double.infinity,
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -206,8 +241,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.pinkAccent)),
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(colors: [
+                    Color.fromRGBO(255, 255, 255, 0.8),
+                    Color.fromRGBO(255, 255, 255, 0.2)
+                  ]),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [

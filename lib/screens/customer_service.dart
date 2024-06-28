@@ -25,6 +25,11 @@ class _CustomerServiceState extends State<CustomerService> {
         body: Container(
             width: double.infinity,
             height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        'https://cdn.pixabay.com/photo/2022/12/10/11/08/trees-7646958_960_720.jpg'))),
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: ListView(
               children: [
@@ -137,7 +142,14 @@ class _CustomerServiceState extends State<CustomerService> {
                         ),
                       );
                     },
-                    child: const Text("Request Customer Service"))
+                    child: Container(
+                        width: 300,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                            child: const Text("Request Customer Service"))))
               ],
             )));
   }

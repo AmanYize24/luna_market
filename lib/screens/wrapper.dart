@@ -32,7 +32,11 @@ class _WrapperState extends State<Wrapper> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          decoration: wrapperBackground,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://cdn.pixabay.com/photo/2022/01/25/12/53/tree-6966126_960_720.jpg'))),
           width: double.infinity,
           height: double.infinity,
           child: ListView(

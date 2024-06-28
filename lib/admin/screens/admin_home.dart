@@ -49,103 +49,146 @@ class _AdminHomeState extends State<AdminHome> {
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                      "https://cdn.pixabay.com/photo/2024/04/04/12/26/ai-generated-8675021_1280.png"))),
+                      "https://cdn.pixabay.com/photo/2016/10/21/09/25/rocks-1757593_1280.jpg"))),
           child: FutureBuilder(
               future: getData(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView(
                     children: [
-                      adminDashboardBtn(
-                          btnName: ' There are ${snapshot.data!.length} Orders',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const Orders()));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'Featured Products',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "Featured",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'New Products',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "New Products",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'Electronics',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "Electronics",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'Clothing',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "Clothing",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'Furniture',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "Furniture",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'Cars',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "Cars",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
-                      adminDashboardBtn(
-                          btnName: 'House',
-                          onPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Products(
-                                      title: "House",
-                                      productList: featuredImg,
-                                      products: () async {
-                                        await showFeatured(context: context);
-                                      },
-                                    )));
-                          }),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            adminDashboardBtn(
+                                btnName: 'Orders',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const Orders()));
+                                }),
+                            adminDashboardBtn(
+                                btnName: 'Featured Products',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "Featured",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            adminDashboardBtn(
+                                btnName: 'New Products',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "New Products",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                            adminDashboardBtn(
+                                btnName: 'Electronics',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "Electronics",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            adminDashboardBtn(
+                                btnName: 'Clothing',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "Clothing",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                            adminDashboardBtn(
+                                btnName: 'Furniture',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "Furniture",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            adminDashboardBtn(
+                                btnName: 'Cars',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "Cars",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                            adminDashboardBtn(
+                                btnName: 'House',
+                                onPress: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Products(
+                                            title: "House",
+                                            productList: featuredImg,
+                                            products: () async {
+                                              await showFeatured(
+                                                  context: context);
+                                            },
+                                          )));
+                                }),
+                          ],
+                        ),
+                      )
                     ],
                   );
                 } else if (snapshot.connectionState ==
