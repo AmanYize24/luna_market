@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:luna_market/screens/sign_up.dart';
 
 import '../widgets/wrapper_input.dart';
-import '../colors/wrapper_color.dart';
 import '../widgets/box.dart';
 import '../widgets/account_btn.dart';
 import '../auth/auth.dart';

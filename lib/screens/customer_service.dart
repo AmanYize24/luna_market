@@ -148,8 +148,8 @@ class _CustomerServiceState extends State<CustomerService> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                            child: const Text("Request Customer Service"))))
+                        child: const Center(
+                            child: Text("Request Customer Service"))))
               ],
             )));
   }

@@ -3,7 +3,6 @@ import 'package:luna_market/screens/login_screen.dart';
 import 'package:luna_market/widgets/account_btn.dart';
 import 'package:luna_market/widgets/box.dart';
 import 'package:luna_market/widgets/wrapper_input.dart';
-import '../colors/wrapper_color.dart';
 import '../auth/auth.dart';
 
 class SignUpScreen extends StatefulWidget {

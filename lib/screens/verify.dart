@@ -6,7 +6,6 @@ import 'package:luna_market/screens/home_screen.dart';
 import 'package:luna_market/widgets/box.dart';
 
 import '../auth/auth.dart';
-import '../colors/wrapper_color.dart';
 import 'dart:async';
 
 class Verify extends StatefulWidget {

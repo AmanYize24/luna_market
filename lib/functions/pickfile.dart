@@ -33,34 +33,29 @@ Future<dynamic> imgPath({required context}) async {
   return File('');
 }
 
-Future<String> pickFile(
-    {required dynamic file, required BuildContext context}) async {
+Future<String> pickFile({required dynamic file, required context}) async {
   final String userEmail = FirebaseAuth.instance.currentUser!.email!;
   final Reference fileRef =
       FirebaseStorage.instance.ref().child('Checkout').child('$userEmail.png');
 
   try {
-    UploadTask uploadTask;
     if (kIsWeb) {
       Uint8List fileBytes = file;
-      print('Uploading to web');
-      uploadTask = fileRef.putData(fileBytes);
+
+      await fileRef.putData(fileBytes);
     } else {
       File uploadFile = File(file);
-      print('Uploading to mobile');
-      uploadTask = fileRef.putFile(uploadFile);
+
+      await fileRef.putFile(uploadFile);
     }
 
     // Wait for the upload to complete
-    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-    print('File upload complete.');
 
     // Get the download URL
     String downloadURL = await fileRef.getDownloadURL();
-    print('Download URL obtained: $downloadURL');
+
     return downloadURL;
   } on FirebaseException catch (e) {
-    print('FirebaseException: $e');
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -77,7 +72,6 @@ Future<String> pickFile(
       ),
     );
   } catch (e) {
-    print('Exception: $e');
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(

@@ -10,7 +10,6 @@ import '../auth/auth.dart';
 import 'package:luna_market/widgets/box.dart';
 import 'package:luna_market/widgets/wrapper_btn.dart';
 import '../functions/wrapper_functions.dart';
-import '../colors/wrapper_color.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});

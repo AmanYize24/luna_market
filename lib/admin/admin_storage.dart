@@ -106,7 +106,6 @@ Future<bool> uploadProduct(
   final locationRef = storageRef.child("$ref/$name&$price&$description&.$ext");
   try {
     if (kIsWeb) {
-      print('Uploading to web');
       await locationRef.putData(filePath);
     } else {
       await locationRef.putFile(File(filePath));
