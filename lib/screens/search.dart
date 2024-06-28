@@ -18,6 +18,8 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white.withOpacity(0.5),
+        title: const Text('Search'),
         actions: [
           Align(
             alignment: Alignment.center,
@@ -65,7 +67,12 @@ class _SearchState extends State<Search> {
           )
         ],
       ),
-      body: SizedBox(
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2023/04/14/23/06/ai-generated-7926621_1280.jpg'))),
         width: double.infinity,
         height: double.infinity,
         child: ListView.builder(
@@ -81,8 +88,10 @@ class _SearchState extends State<Search> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                    ),
                     width: double.infinity,
                     height: 150,
                     child: ListView(

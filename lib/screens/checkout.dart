@@ -82,24 +82,29 @@ class _CheckoutState extends State<Checkout> {
       appBar: AppBar(
         title: const Text('Checkout'),
       ),
-      body: SizedBox(
+      body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://pixabay.com/get/gcdfd925cfc8b9f924dbd23e0ed514e7502342a195cd126bd20d1d20401880a8fde709e253111e00edaa0aa4bcdf1c4e5.jpg'))),
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           children: [
             Text(
                 style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17,
-                ),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.white),
                 'User information'),
             box(0, 10),
             Container(
               width: double.infinity,
               height: 200,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+              decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
               child: ListView(
                 children: [
                   box(0, 20),
@@ -159,8 +164,9 @@ class _CheckoutState extends State<Checkout> {
             ),
             Align(
               alignment: Alignment.topRight,
-              child: SizedBox(
+              child: Container(
                 width: 100,
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                 child: TextButton(
                   onPressed: () {
                     showDialog(
@@ -233,31 +239,36 @@ class _CheckoutState extends State<Checkout> {
                   },
                   child: Text(
                       style: GoogleFonts.inter(
-                          color: Colors.pinkAccent,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.black, fontWeight: FontWeight.bold),
                       'Change'),
                 ),
               ),
             ),
             Text(
                 style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17,
-                ),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.white),
                 'Payment Method'),
             box(0, 10),
             Row(
               children: [
-                DropdownMenu(
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: 'telebirr', label: 'Telebirr'),
-                    DropdownMenuEntry(value: 'cbe', label: 'CBE')
-                  ],
-                  onSelected: (value) {
-                    setState(() {
-                      paymentMethod = '$value';
-                    });
-                  },
+                Container(
+                  decoration:
+                      BoxDecoration(color: Colors.white.withOpacity(0.5)),
+                  child: DropdownMenu(
+                    inputDecorationTheme: const InputDecorationTheme(
+                        fillColor: Colors.white, iconColor: Colors.black),
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(value: 'telebirr', label: 'Telebirr'),
+                      DropdownMenuEntry(value: 'cbe', label: 'CBE')
+                    ],
+                    onSelected: (value) {
+                      setState(() {
+                        paymentMethod = '$value';
+                      });
+                    },
+                  ),
                 ),
                 box(20, 0),
                 Align(
@@ -265,8 +276,8 @@ class _CheckoutState extends State<Checkout> {
                   child: Container(
                       width: 200,
                       height: 65,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                      decoration:
+                          BoxDecoration(color: Colors.white.withOpacity(0.5)),
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
@@ -291,7 +302,7 @@ class _CheckoutState extends State<Checkout> {
                               child: Text(
                                   style: GoogleFonts.inter(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.pinkAccent),
+                                      color: Colors.black),
                                   'payment proof')),
                         ],
                       )),
@@ -309,7 +320,7 @@ class _CheckoutState extends State<Checkout> {
             Container(
               width: double.infinity,
               height: 230,
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+              decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
               child: Consumer<CartProvider>(
                 builder: (context, value, child) => ListView(
                   children: [
@@ -348,7 +359,7 @@ class _CheckoutState extends State<Checkout> {
                                                       Alignment.bottomLeft,
                                                   child: Text(
                                                       style: GoogleFonts.inter(
-                                                        color: Colors.grey,
+                                                        color: Colors.black,
                                                         fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -389,11 +400,11 @@ class _CheckoutState extends State<Checkout> {
                                       alignment: Alignment.center,
                                       child: Text(
                                           style: GoogleFonts.inter(
-                                            color: Colors.grey,
+                                            color: Colors.black,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          "${snapshot.data}")),
+                                          "${snapshot.data}ETB")),
                                 ],
                               ),
                             );

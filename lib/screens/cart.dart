@@ -22,9 +22,14 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         title: const Text('cart'),
       ),
-      body: SizedBox(
+      body: Container(
         width: double.infinity,
         height: double.infinity,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://pixabay.com/get/g36c2bfbcd6314eb6cfa3a4f1ce2359ba2b4041fc1d69efcfec9b88a3128571d3896f4e942549777e5de01a5427afeff8.jpg'))),
         child: Consumer<CartProvider>(builder: (context, value, child) {
           return FirebaseAuth.instance.currentUser!.isAnonymous
               ? const Center(child: Text("please sign to see cart"))
@@ -61,6 +66,9 @@ class _CartState extends State<Cart> {
                                                         vertical: 10),
                                                 width: double.infinity,
                                                 height: 150,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white
+                                                        .withOpacity(0.5)),
                                                 child: ListView(
                                                   scrollDirection:
                                                       Axis.horizontal,
@@ -85,118 +93,112 @@ class _CartState extends State<Cart> {
                                                                     ['img'])),
                                                       ),
                                                     ),
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10),
-                                                      width: 210,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                              gradient:
-                                                                  LinearGradient(
-                                                                      colors: [
-                                                            Colors.greenAccent,
-                                                            Colors.white
-                                                          ])),
-                                                      child: ListView(
-                                                        children: [
-                                                          box(0, 5),
-                                                          SizedBox(
-                                                            height: 20,
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                  style: GoogleFonts.inter(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                  "${snapshot.data![index]['name']}"),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 10),
+                                                        width: 300,
+                                                        height: 150,
+                                                        child: ListView(
+                                                          children: [
+                                                            box(0, 5),
+                                                            SizedBox(
+                                                              height: 20,
+                                                              child: Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topLeft,
+                                                                child: Text(
+                                                                    style: GoogleFonts.inter(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                    "${snapshot.data![index]['name']}"),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          box(0, 5),
-                                                          SizedBox(
-                                                            height: 20,
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                  style: GoogleFonts.inter(
-                                                                      color: Colors
-                                                                          .grey),
-                                                                  "${snapshot.data![index]['price']}"),
+                                                            box(0, 5),
+                                                            SizedBox(
+                                                              height: 20,
+                                                              child: Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topLeft,
+                                                                child: Text(
+                                                                    style: GoogleFonts.inter(
+                                                                        color: Colors
+                                                                            .black),
+                                                                    "${snapshot.data![index]['price']}"),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          box(0, 5),
-                                                          SizedBox(
-                                                            height: 30,
-                                                            child: ListView(
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .topLeft,
-                                                                  child: Text(
-                                                                      style: GoogleFonts.inter(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              10),
-                                                                      "${snapshot.data![index]['description']}"),
-                                                                ),
-                                                              ],
+                                                            box(0, 5),
+                                                            SizedBox(
+                                                              height: 30,
+                                                              child: ListView(
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topLeft,
+                                                                    child: Text(
+                                                                        style: GoogleFonts.inter(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize: 10),
+                                                                        "${snapshot.data![index]['description']}"),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            width:
-                                                                double.infinity,
-                                                            height: 50,
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .bottomRight,
-                                                              child: IconButton(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    setState(
-                                                                        () {
-                                                                      loading =
-                                                                          true;
-                                                                    });
+                                                            SizedBox(
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 50,
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .bottomRight,
+                                                                child: IconButton(
+                                                                    onPressed: () async {
+                                                                      setState(
+                                                                          () {
+                                                                        loading =
+                                                                            true;
+                                                                      });
 
-                                                                    await removeFromCart(
-                                                                        context:
-                                                                            context,
-                                                                        obj: {
-                                                                          'description':
-                                                                              snapshot.data![index]['description'],
-                                                                          'img':
-                                                                              snapshot.data![index]['img'],
-                                                                          'name':
-                                                                              snapshot.data![index]['name'],
-                                                                          'price':
-                                                                              snapshot.data![index]['price']
-                                                                        });
-                                                                    setState(
-                                                                        () {
-                                                                      loading =
-                                                                          false;
-                                                                    });
-                                                                  },
-                                                                  icon: loading
-                                                                      ? const CircularProgressIndicator()
-                                                                      : const Icon(
-                                                                          Icons
-                                                                              .delete,
-                                                                          color:
-                                                                              Colors.pinkAccent,
-                                                                        )),
-                                                            ),
-                                                          )
-                                                        ],
+                                                                      await removeFromCart(
+                                                                          context:
+                                                                              context,
+                                                                          obj: {
+                                                                            'description':
+                                                                                snapshot.data![index]['description'],
+                                                                            'img':
+                                                                                snapshot.data![index]['img'],
+                                                                            'name':
+                                                                                snapshot.data![index]['name'],
+                                                                            'price':
+                                                                                snapshot.data![index]['price']
+                                                                          });
+                                                                      setState(
+                                                                          () {
+                                                                        loading =
+                                                                            false;
+                                                                      });
+                                                                    },
+                                                                    icon: loading
+                                                                        ? const CircularProgressIndicator()
+                                                                        : const Icon(
+                                                                            Icons.delete,
+                                                                            color:
+                                                                                Colors.pinkAccent,
+                                                                          )),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ],

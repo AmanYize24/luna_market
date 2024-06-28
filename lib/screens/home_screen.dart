@@ -298,7 +298,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Colors.greenAccent.withOpacity(0.1)),
+                            gradient: LinearGradient(colors: [
+                          Colors.greenAccent.withOpacity(0.2),
+                          Colors.purpleAccent.withOpacity(0.05)
+                        ])),
                         padding: const EdgeInsets.all(10),
                         child: Align(
                           alignment: Alignment.center,
